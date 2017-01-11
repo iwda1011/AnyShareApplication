@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Dummy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVPfad" />
+
+
+    <Button
+        android:text="Zurück"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/BTNzuruck"
+
+        android:layout_alignBaseline="@+id/BTNbestatigen"
+        android:layout_alignBottom="@+id/BTNbestatigen"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="78dp" />
+
+    <TextView
+        android:text="TextView"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVBeschreibung"
+        android:layout_alignTop="@+id/TVveranstal"
+        android:layout_alignStart="@+id/TVDetail" />
+
+    <TextView
+        android:text="Details:"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVDeatilss"
+
+        android:layout_alignBottom="@+id/TVDetail"
+        android:layout_toStartOf="@+id/TVDetail"
+        android:layout_marginEnd="58dp" />
+
+    <TextView
+        android:text="User:"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVUsername"
+        android:layout_alignTop="@+id/TVUser"
+        android:layout_alignEnd="@+id/TVDeatilss" />
+
+    <TextView
+        android:text="Veranstaltung:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVveranstal"
+        android:textSize="15dp"
+
+        android:layout_marginBottom="70dp"
+        android:layout_above="@+id/TVDeatilss"
+        android:layout_alignEnd="@+id/TVDeatilss" />
+
+    <TextView
+        android:text="TextView"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVUser"
+        android:layout_marginBottom="90dp"
+        android:layout_marginEnd="51dp"
+        android:layout_above="@+id/BTNzuruck"
+        android:layout_alignEnd="@+id/BTNzuruck" />
+
+    <TextView
+        android:text="TextView"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVDetail"
+        android:layout_marginBottom="64dp"
+        android:layout_above="@+id/TVUser"
+        android:layout_alignStart="@+id/TVUser" />
+
+    <Button
+        android:text="Anfragen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:id="@+id/BTNbestatigen"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/TVUser"
+        android:layout_marginEnd="11dp" />
+</RelativeLayout>

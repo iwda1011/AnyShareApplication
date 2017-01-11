@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Kategorie wählen:"
+        android:layout_width="wrap_content"
+        android:textSize="20dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVKategorie"
+        android:layout_marginTop="78dp"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true" />
+
+    <Spinner
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/SPKategorien"
+        android:layout_marginTop="73dp"
+
+        android:layout_below="@+id/TVKategorie"
+        android:layout_alignStart="@+id/BtnKatWahlen" />
+
+    <Button
+        android:text="Weiter"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/my_button_border"
+        android:id="@+id/BtnKatWahlen"
+        android:layout_marginBottom="73dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Veranstaltung erstellen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/textView4"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

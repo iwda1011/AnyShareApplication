@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/usersymbolgrey"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:id="@+id/imageView2" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="200dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:id="@+id/TVUsername"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/TVNachname" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/TVNachname"
+        android:layout_below="@+id/TVUsername"
+        android:layout_alignStart="@+id/TVVorname"
+        android:layout_marginTop="28dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/TVVorname"
+        android:layout_alignTop="@+id/TVNachname"
+        android:layout_alignStart="@+id/TVEmail"
+        android:layout_marginTop="32dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/TVEmail"
+        android:layout_below="@+id/TVVorname"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp" />
+
+    <Button
+        android:text="Logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="34dp"
+        android:id="@+id/BtnLogout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/TVEmail" />
+
+    <Button
+        android:text="Daten ändern"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:layout_alignBaseline="@+id/BtnLogout"
+        android:layout_alignBottom="@+id/BtnLogout"
+        android:layout_toEndOf="@+id/BtnLogout"
+        android:layout_marginStart="12dp" />
+
+
+</RelativeLayout>

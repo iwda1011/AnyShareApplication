@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/TFPassword2"
+        android:layout_marginBottom="27dp"
+        android:layout_above="@+id/BTNSignup"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Passwort wiederholen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVPassword2"
+        android:layout_above="@+id/TFPassword2"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/TFPassword1"
+        android:layout_above="@+id/TVPassword2"
+        android:layout_alignStart="@+id/TFPassword2" />
+
+    <TextView
+        android:text="Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVPassword1"
+        android:layout_above="@+id/TFPassword1"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:id="@+id/TFEmail"
+        android:hint="max.mustermann@aol.de"
+        android:layout_above="@+id/TVPassword1"
+        android:layout_alignStart="@+id/TFPassword1" />
+
+    <TextView
+        android:text="Email-Addresse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVEMAIL"
+        android:layout_above="@+id/TFEmail"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:id="@+id/TFVorname"
+        android:hint="Max"
+        android:layout_above="@+id/TVEMAIL"
+        android:layout_alignStart="@+id/TFEmail" />
+
+    <TextView
+        android:text="Vorname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVVorname"
+        android:layout_above="@+id/TFVorname"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:hint="Mustermann"
+        android:id="@+id/TFName"
+        android:layout_above="@+id/TVVorname"
+        android:layout_alignStart="@+id/TFVorname" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:focusable="true"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/TFUser"
+        android:hint="Mr_Trinker123"
+        android:focusableInTouchMode="true"
+        android:layout_above="@+id/TVName"
+        android:layout_alignStart="@+id/TFName" />
+
+    <TextView
+        android:text="Benutzername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVUsername"
+        android:layout_above="@+id/TFUser"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Benutzer anlegen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginTop="21dp"
+        android:id="@+id/TVDummy"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Nachname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVName"
+        android:layout_weight="1"
+        android:layout_above="@+id/TFName"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Anmelden"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/BTNSignup"
+        android:background="@drawable/my_button_border"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp" />
+
+</RelativeLayout>

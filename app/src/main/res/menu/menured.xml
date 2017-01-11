@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:title=""
+        android:orderInCategory="4"
+        app:showAsAction="always"
+        android:id="@+id/MItemUser"
+        />
+    <item
+        android:id="@+id/action_name"
+        android:icon="@drawable/usersymbolred"
+        android:title="HALLO!"
+        app:showAsAction="always|withText"
+        android:orderInCategory="5"
+
+        />
+
+
+</menu>

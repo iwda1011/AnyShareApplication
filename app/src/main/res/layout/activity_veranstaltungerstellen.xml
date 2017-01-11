@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:id="@+id/TVKategorieWaehlen"
+        android:text="DummyText"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Erstellen"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="71dp"
+        android:background="@drawable/my_button_border"
+        android:id="@+id/BtnVerErstellen"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Beschreibung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:id="@+id/TVBeschreibung"
+        android:layout_below="@+id/TVKategorieWaehlen"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:hint="Essen im Oxford"
+        android:id="@+id/ETBeschreibung"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/TVBeschreibung"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Detailinfos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ETBeschreibung"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:id="@+id/TVDetails" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Treffpunkt 18 Uhr, ..."
+        android:ems="10"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/ETBeschreibung"
+        android:id="@+id/ETDetailbeschreibung" />
+
+</RelativeLayout>
