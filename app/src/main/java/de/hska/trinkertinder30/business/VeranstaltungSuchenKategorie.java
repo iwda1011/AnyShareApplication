@@ -1,4 +1,4 @@
-package de.hska.trinkertinder30;
+package de.hska.trinkertinder30.business;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,62 +9,63 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import de.hska.trinkertinder30.R;
+import de.hska.trinkertinder30.database.DatabaseHelper;
+import de.hska.trinkertinder30.domain.Kontakt;
+
 /**
- * Created by davidiwertowski on 19.12.16.
+ * Created by davidiwertowski on 21.12.16.
  */
 
-public class KategorieWaehlen extends AppCompatActivity {
+public class VeranstaltungSuchenKategorie extends AppCompatActivity {
 
-    DatabaseHelperKategorien helper = new DatabaseHelperKategorien(this);
-    public Button waehlenBtn;
-    public Contact contact = new Contact();
 
+    private DatabaseHelper helper;
+    Kontakt contact = new Kontakt();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kategoriewaehlen);
+        setContentView(R.layout.activity_suchenkategorie);
 
+        final ListView listView = (ListView)findViewById(R.id.LVKatsSuchen);
+        helper = new DatabaseHelper(this);
         ArrayList<String> array_kategorien = helper.getAllKategorien();
 
-        Spinner spinner = (Spinner)findViewById(R.id.SPKategorien);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
 
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.spinner_row, array_kategorien);
+        if(array_kategorien.size() != 0) {
+            adapter.addAll(array_kategorien);
+            adapter.notifyDataSetChanged();
+        }
 
-        spinner.setAdapter(adapter);
+        listView.setAdapter(adapter);
 
-        waehlenBtn = (Button) findViewById(R.id.BtnKatWahlen);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent = new Intent(VeranstaltungSuchenKategorie.this, VeranstaltungSuchen.class);
 
-        waehlenBtn.setOnClickListener(new View.OnClickListener(){
-
-            public void onClick(View arg0){
-
-                Spinner spinner = (Spinner)findViewById(R.id.SPKategorien);
-                String spinnerkategorien = spinner.getSelectedItem().toString();
+                String kategoriename = (String) listView.getItemAtPosition(position);
 
                 Bundle bundle = new Bundle();
-                bundle.putString("spinnerkategorien", spinnerkategorien);
-
-                Intent myIntent = new Intent(KategorieWaehlen.this, VeranstaltungErstellen.class);
-                myIntent.putExtras(bundle);
-                startActivity(myIntent);
+                bundle.putString("kategoriename", kategoriename);
+                intent.putExtras(bundle);
+                startActivity(intent);
 
             }
         });
-
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(R.layout.custom_logo);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-
 
     }
     @Override
@@ -92,10 +93,8 @@ public class KategorieWaehlen extends AppCompatActivity {
 
     }
     public void clickItem(MenuItem item) {
-        Intent intent = new Intent(KategorieWaehlen.this, Profil.class);
+        Intent intent = new Intent(VeranstaltungSuchenKategorie.this, Profil.class);
         startActivity(intent);
     }
-
-
 
 }

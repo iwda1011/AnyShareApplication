@@ -1,4 +1,4 @@
-package de.hska.trinkertinder30;
+package de.hska.trinkertinder30.business;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,8 +13,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import de.hska.trinkertinder30.R;
+import de.hska.trinkertinder30.database.DatabaseHelper;
+import de.hska.trinkertinder30.domain.Kontakt;
 
 /**
  * Created by davidiwertowski on 23.12.16.
@@ -22,8 +25,8 @@ import java.util.List;
 
 public class Profil extends AppCompatActivity {
 
-    DatabaseHelperKontakte db = new DatabaseHelperKontakte(this);
-    Contact contact = new Contact();
+    DatabaseHelper db = new DatabaseHelper(this);
+    Kontakt contact = new Kontakt();
     private Button BtnLogout;
 
     @Override
@@ -37,7 +40,7 @@ public class Profil extends AppCompatActivity {
         TextView tvVorname = (TextView)findViewById(R.id.TVVorname);
         TextView tvEmail = (TextView)findViewById(R.id.TVEmail);
 
-        List<Contact> contacts = db.getKontaktToShow(contact.getUname());
+        List<Kontakt> contacts = db.getContactToShow(contact.getUname());
 
 
         String name = contacts.get(0).getName().toString();

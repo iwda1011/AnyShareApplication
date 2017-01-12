@@ -1,4 +1,4 @@
-package de.hska.trinkertinder30;
+package de.hska.trinkertinder30.domain;
 
 import java.security.Timestamp;
 

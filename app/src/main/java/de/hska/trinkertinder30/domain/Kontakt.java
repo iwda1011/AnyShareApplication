@@ -1,10 +1,10 @@
-package de.hska.trinkertinder30;
+package de.hska.trinkertinder30.domain;
 
 /**
  * Created by davidiwertowski on 16.12.16.
  */
 
-public class Contact {
+public class Kontakt {
 
     /**
      * Hier wird die Variable für Name, Emailadresse, Username und Passwort gesetzt
@@ -12,9 +12,9 @@ public class Contact {
     String name, vorname, email, pass;
     static String uname;
 
-    public Contact(){}
+    public Kontakt(){}
 
-    public Contact (String name, String vorname, String email, String pass){
+    public Kontakt(String name, String vorname, String email, String pass){
         this.name = name;
         this.vorname = vorname;
         this.email = email;

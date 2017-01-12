@@ -1,4 +1,4 @@
-package de.hska.trinkertinder30;
+package de.hska.trinkertinder30.business;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,7 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import de.hska.trinkertinder30.R;
+import de.hska.trinkertinder30.database.DatabaseHelper;
+import de.hska.trinkertinder30.domain.Kontakt;
 
 /**
  * Created by davidiwertowski on 21.12.16.
@@ -23,13 +26,13 @@ import java.util.List;
 
 public class VeranstaltungSuchen extends AppCompatActivity {
 
-    private DatabaseHelperVeranstaltung databaseHelperVeranstaltung;
-    Contact contact = new Contact();
+    private DatabaseHelper databaseHelper;
+    Kontakt contact = new Kontakt();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_veranstaltungsuchen);
+        setContentView(R.layout.activity_suchen);
 
 
         TextView tvPfad = (TextView) findViewById(R.id.TVPfad2);
@@ -42,11 +45,11 @@ public class VeranstaltungSuchen extends AppCompatActivity {
 
         final ListView listView = (ListView)findViewById(R.id.LVBeschreibungen);
 
-        databaseHelperVeranstaltung = new DatabaseHelperVeranstaltung(this);
+        databaseHelper = new DatabaseHelper(this);
 
         /**Hier werden alle Unterkategorien gesammelt
          * TODO zusätzlich IDs sammeln und unten übergeben im Intent*/
-        ArrayList<String> array_kategorien = databaseHelperVeranstaltung.getAllBeschreibungen(kategoriename);
+        ArrayList<String> array_kategorien = databaseHelper.getAllBeschreibungen(kategoriename);
 
         if (array_kategorien.size() == 0){
 
@@ -68,7 +71,7 @@ public class VeranstaltungSuchen extends AppCompatActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                    Intent myIntent = new Intent(VeranstaltungSuchen.this, VeranstaltungDetail.class);
+                    Intent myIntent = new Intent(VeranstaltungSuchen.this, VeranstaltungSuchenDetail.class);
 
                     String beschreibung = (String) listView.getItemAtPosition(position);
                     Bundle bundle = new Bundle();

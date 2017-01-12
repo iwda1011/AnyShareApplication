@@ -1,4 +1,4 @@
-package de.hska.trinkertinder30;
+package de.hska.trinkertinder30.business;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,19 +8,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import de.hska.trinkertinder30.R;
+import de.hska.trinkertinder30.database.DatabaseHelper;
+import de.hska.trinkertinder30.domain.Kontakt;
+
 /**
  * Created by davidiwertowski on 16.12.16.
  */
 
-public class SignUp extends Activity {
+public class Anmeldung extends Activity {
 
     public Button signupBtn;
-    DatabaseHelperKontakte helper = new DatabaseHelperKontakte(this);
+    DatabaseHelper helper = new DatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.singup);
+        setContentView(R.layout.activity_anmeldung);
 
 
         signupBtn = (Button) findViewById(R.id.BTNSignup);
@@ -49,19 +53,19 @@ public class SignUp extends Activity {
                 }
 
                 if (usernamestr.isEmpty()) {
-                    Toast.makeText(SignUp.this, "Kein Username eingegeben", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Anmeldung.this, "Kein Username eingegeben", Toast.LENGTH_SHORT).show();
                 } else if (namestr.isEmpty()) {
-                    Toast.makeText(SignUp.this, "Kein Name eingegeben", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Anmeldung.this, "Kein Name eingegeben", Toast.LENGTH_SHORT).show();
                 } else if (vornamestr.isEmpty()) {
-                    Toast.makeText(SignUp.this, "Kein Vorname eingegeben", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Anmeldung.this, "Kein Vorname eingegeben", Toast.LENGTH_SHORT).show();
                 } else if (emailstr.isEmpty()) {
-                    Toast.makeText(SignUp.this, "Keine E-Mail-Adresse eingegeben", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Anmeldung.this, "Keine E-Mail-Adresse eingegeben", Toast.LENGTH_SHORT).show();
                 } else if (passstr.isEmpty()) {
-                    Toast.makeText(SignUp.this, "Kein Passwort eingegeben", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Anmeldung.this, "Kein Passwort eingegeben", Toast.LENGTH_SHORT).show();
                 } else if (!passstr.equals(pass2str)) {
-                    Toast.makeText(SignUp.this, "Passwort stimmt nicht überein!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Anmeldung.this, "Passwort stimmt nicht überein!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Contact contact = new Contact();
+                    Kontakt contact = new Kontakt();
                     contact.setName(namestr);
                     contact.setVorname(vornamestr);
                     contact.setEmail(emailstr);
@@ -71,7 +75,7 @@ public class SignUp extends Activity {
 
                     helper.insertContact(contact);
 
-                    Intent myIntent = new Intent(SignUp.this, Home.class);
+                    Intent myIntent = new Intent(Anmeldung.this, Hauptmenu.class);
 
                     startActivity(myIntent);
                 }

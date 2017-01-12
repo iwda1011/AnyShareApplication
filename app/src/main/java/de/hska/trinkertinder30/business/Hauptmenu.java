@@ -1,4 +1,4 @@
-package de.hska.trinkertinder30;
+package de.hska.trinkertinder30.business;
 
 
 import android.content.Intent;
@@ -10,38 +10,41 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
+import de.hska.trinkertinder30.R;
+import de.hska.trinkertinder30.database.DatabaseHelper;
+import de.hska.trinkertinder30.domain.Kontakt;
+import de.hska.trinkertinder30.domain.Veranstaltung;
 
 
 /**
- * Created by davidiwertowski on 16.12.16.
+ * Hauptmenü, von hier aus starten die Navigationsmöglichkeiten zu Profil, Veranstaltung suchen und Veranstaltung erstellen. Außerdem
+ * wird eine Vorschau der zuletzt erstellten Veranstaltungen gezeigt
+ *
+ * @Version 1.0
  */
-
-public class Home extends AppCompatActivity {
+public class Hauptmenu extends AppCompatActivity {
 
     public Button erstellenBtn;
     public Button suchenBtn;
     public Button profilBtn;
-    Contact contact = new Contact();
-    private DatabaseHelperVeranstaltung helper;
+    Kontakt contact = new Kontakt();
+    private DatabaseHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_hauptmenu);
 
         final ListView listView = (ListView)findViewById(R.id.LVNews);
 
-        helper = new DatabaseHelperVeranstaltung(this);
+        helper = new DatabaseHelper(this);
 
 
         ArrayList<Veranstaltung> veranstaltungen = helper.getAllVeranstaltungen();
@@ -66,7 +69,7 @@ public class Home extends AppCompatActivity {
         suchenBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
 
-                Intent myIntent = new Intent(Home.this, VeranstaltungSuchenKategorie.class);
+                Intent myIntent = new Intent(Hauptmenu.this, VeranstaltungSuchenKategorie.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("username", contact.getUname());
                 System.out.println(contact.getUname()+"!!!!!!!");
@@ -81,14 +84,14 @@ public class Home extends AppCompatActivity {
             erstellenBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
 
-                    Toast.makeText(Home.this, "Nicht eingeloggt", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Hauptmenu.this, "Nicht eingeloggt", Toast.LENGTH_LONG).show();
 
                 }
             });
             profilBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
 
-                    Toast.makeText(Home.this, "Nicht eingeloggt", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Hauptmenu.this, "Nicht eingeloggt", Toast.LENGTH_LONG).show();
 
                 }
             });
@@ -97,7 +100,7 @@ public class Home extends AppCompatActivity {
             erstellenBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
 
-                    Intent myIntent = new Intent(Home.this, KategorieWaehlen.class);
+                    Intent myIntent = new Intent(Hauptmenu.this, VeranstaltungErstellenKategorie.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("username", contact.getUname());
                     startActivity(myIntent);
@@ -107,7 +110,7 @@ public class Home extends AppCompatActivity {
             profilBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
 
-                    Intent myIntent = new Intent(Home.this, Profil.class);
+                    Intent myIntent = new Intent(Hauptmenu.this, Profil.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("username", contact.getUname());
                     startActivity(myIntent);
@@ -160,7 +163,7 @@ public class Home extends AppCompatActivity {
     }
 
     public void clickItem(MenuItem item) {
-        Intent intent = new Intent(Home.this, Profil.class);
+        Intent intent = new Intent(Hauptmenu.this, Profil.class);
         startActivity(intent);
     }
 

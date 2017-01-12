@@ -1,4 +1,4 @@
-package de.hska.trinkertinder30;
+package de.hska.trinkertinder30.business;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,12 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import de.hska.trinkertinder30.R;
+import de.hska.trinkertinder30.domain.Kontakt;
+
 /**
  * Created by davidiwertowski on 21.12.16.
  */
 
 public class Mock extends AppCompatActivity {
-    Contact contact = new Contact();
+    Kontakt contact = new Kontakt();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

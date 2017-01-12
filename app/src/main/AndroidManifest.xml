@@ -10,22 +10,22 @@
         android:theme="@style/AppTheme"
         >
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".business.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUp"></activity>
-        <activity android:name=".Home"></activity>
-        <activity android:name=".KategorieWaehlen"></activity>
-        <activity android:name=".VeranstaltungErstellen"></activity>
-        <activity android:name=".VeranstaltungSuchen"></activity>
-        <activity android:name=".VeranstaltungSuchenKategorie"></activity>
-        <activity android:name=".VeranstaltungDetail"></activity>
-        <activity android:name=".Mock"></activity>
-        <activity android:name=".Profil"></activity>
+        <activity android:name=".business.Anmeldung"></activity>
+        <activity android:name=".business.Hauptmenu"></activity>
+        <activity android:name=".business.VeranstaltungErstellenKategorie"></activity>
+        <activity android:name=".business.VeranstaltungErstellenAbschluss"></activity>
+        <activity android:name=".business.VeranstaltungSuchen"></activity>
+        <activity android:name=".business.VeranstaltungSuchenKategorie"></activity>
+        <activity android:name=".business.VeranstaltungSuchenDetail"></activity>
+        <activity android:name=".business.Mock"></activity>
+        <activity android:name=".business.Profil"></activity>
     </application>
 
 </manifest>

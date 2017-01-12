@@ -1,4 +1,4 @@
-package de.hska.trinkertinder30;
+package de.hska.trinkertinder30.business;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,27 +13,42 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import de.hska.trinkertinder30.R;
+import de.hska.trinkertinder30.database.DatabaseHelper;
+import de.hska.trinkertinder30.domain.Kontakt;
+
+/**
+ * MainActivity-Klasse, Startpunkt/-klasse der App, Weiterleitung zum Haupmenü-Bildschirm durch "Login" oder "Weiter als Gast",
+ * Weiterleitung zu Anmelde-Bildschirm
+ *
+ * @Version 1.0
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /**Button für Login, Weiterleitung zu Hauptmenü, funktioniert nur wenn Nutzer mit entsprechenden Daten sich anmeldet,
+     * die in der Datenbank hinterlegt sind */
     public Button loginBtn;
+
+    /**Button für Anmeldung, Weiterleitung zum Anmelde-Fenster */
     public Button signInBtn;
+
+    /**Weiterleitung ins Hauptmenü, ohne Anmeldung bzw. explizieten Nutzer aus der Datenbank*/
     public Button gastBtn;
 
-    Contact contact;
+    /**Neuer Kontakt, Dummy-Kontakt, wird verwendet als Gastbenutzer*/
+    Kontakt contact;
 
-    DatabaseHelperKontakte helper = new DatabaseHelperKontakte(this);
-
-
+    /**Datenbankklasse der Kontakte initiert*/
+    DatabaseHelper helper = new DatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_mainactivity);
 
         loginBtn = (Button) findViewById(R.id.BTNLogin);
         signInBtn = (Button) findViewById(R.id.BTNSignStart);
         gastBtn = (Button) findViewById(R.id.BTNGast);
-
 
         loginBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View arg0){
@@ -41,26 +56,28 @@ public class MainActivity extends AppCompatActivity {
                 EditText username = (EditText)findViewById(R.id.TFUsername);
                 String usernamestr = username.getText().toString();
 
-                if(usernamestr.substring(usernamestr.length()-1).contains(" ")){
+
+/*
+                else if(usernamestr.substring(usernamestr.length()-1).contains(" ")){
                     usernamestr = usernamestr.substring(0,usernamestr.length()-1);
                 }
+*/
+                EditText password = (EditText)findViewById(R.id.TFPassword2);
+                String pass =password.getText().toString();
 
-                EditText b = (EditText)findViewById(R.id.TFPassword2);
-                String pass =b.getText().toString();
+                String passwordtest = helper.searchPassword(usernamestr);
+                if(pass.equals(passwordtest)){
 
-                String password = helper.searchPass(usernamestr);
-                if(pass.equals(password)){
-
-                    Intent myIntent = new Intent(MainActivity.this, Home.class);
-                    Contact contact = new Contact();
+                    Intent myIntent = new Intent(MainActivity.this, Hauptmenu.class);
+                    Kontakt contact = new Kontakt();
                     contact.setUname(usernamestr);
 
                     startActivity(myIntent);
 
                 } else {
 
-                    Toast passalert = Toast.makeText(MainActivity.this, "Password doesnt match!", Toast.LENGTH_SHORT);
-                    passalert.show();
+                    Toast passwordAlert = Toast.makeText(MainActivity.this, "Passwort/Nutzername stimmt nicht überein", Toast.LENGTH_SHORT);
+                    passwordAlert.show();
                 }
 
             }
@@ -69,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
         signInBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View arg0){
 
-
-                Intent myIntent = new Intent(MainActivity.this, SignUp.class);
+                Intent myIntent = new Intent(MainActivity.this, Anmeldung.class);
 
                 startActivity(myIntent);
 
@@ -80,10 +96,9 @@ public class MainActivity extends AppCompatActivity {
         gastBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View arg0){
 
-
-                contact = new Contact();
+                contact = new Kontakt();
                 contact.setUname("Gast");
-                Intent myIntent = new Intent(MainActivity.this, Home.class);
+                Intent myIntent = new Intent(MainActivity.this, Hauptmenu.class);
                 startActivity(myIntent);
 
             }
@@ -101,19 +116,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.menugrey, menu);
-
         return true;
-
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        Contact c = new Contact();
+        Kontakt c = new Kontakt();
         MenuItem bedMenuItem = menu.findItem(R.id.MItemUserGrey);
-
         return super.onPrepareOptionsMenu(menu);
-
     }
 
 

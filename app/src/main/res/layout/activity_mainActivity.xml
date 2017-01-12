@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    tools:context="de.hska.trinkertinder30.MainActivity">
+    tools:context="de.hska.trinkertinder30.business.MainActivity">
 
     <EditText
         android:layout_width="match_parent"

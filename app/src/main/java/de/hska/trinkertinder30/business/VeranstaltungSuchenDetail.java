@@ -1,4 +1,4 @@
-package de.hska.trinkertinder30;
+package de.hska.trinkertinder30.business;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,25 +9,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import de.hska.trinkertinder30.R;
+import de.hska.trinkertinder30.database.DatabaseHelper;
+import de.hska.trinkertinder30.domain.Kontakt;
 
 /**
  * Created by davidiwertowski on 21.12.16.
  */
 
-public class VeranstaltungDetail extends AppCompatActivity {
+public class VeranstaltungSuchenDetail extends AppCompatActivity {
 
-    DatabaseHelperVeranstaltung helper = new DatabaseHelperVeranstaltung(this);
-    Contact contact = new Contact();
+    DatabaseHelper helper = new DatabaseHelper(this);
+    Kontakt contact = new Kontakt();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_veranstaltungdetail);
+        setContentView(R.layout.activity_suchendetail);
 
         TextView tvPfad = (TextView) findViewById(R.id.TVPfad);
         TextView tvBeschreibung = (TextView) findViewById(R.id.TVBeschreibung);
@@ -78,7 +80,7 @@ public class VeranstaltungDetail extends AppCompatActivity {
 
     }
     public void clickItem(MenuItem item) {
-        Intent intent = new Intent(VeranstaltungDetail.this, Profil.class);
+        Intent intent = new Intent(VeranstaltungSuchenDetail.this, Profil.class);
         startActivity(intent);
     }
 

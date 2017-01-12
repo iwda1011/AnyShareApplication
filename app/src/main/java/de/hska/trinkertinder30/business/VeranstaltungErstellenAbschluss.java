@@ -1,4 +1,4 @@
-package de.hska.trinkertinder30;
+package de.hska.trinkertinder30.business;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,20 +14,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import de.hska.trinkertinder30.R;
+import de.hska.trinkertinder30.database.DatabaseHelper;
+import de.hska.trinkertinder30.domain.Kontakt;
+import de.hska.trinkertinder30.domain.Veranstaltung;
+
 /**
  * Created by davidiwertowski on 21.12.16.
  */
 
-public class VeranstaltungErstellen extends AppCompatActivity {
+public class VeranstaltungErstellenAbschluss extends AppCompatActivity {
 
-    DatabaseHelperVeranstaltung helper = new DatabaseHelperVeranstaltung(this);
+    DatabaseHelper helper = new DatabaseHelper(this);
     public Button button1;
-    public Contact contact = new Contact();
+    public Kontakt contact = new Kontakt();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_veranstaltungerstellen);
+        setContentView(R.layout.activity_erstellenabschluss);
 
         TextView tvKatWaehlen = (TextView) findViewById(R.id.TVKategorieWaehlen);
 
@@ -58,14 +63,14 @@ public class VeranstaltungErstellen extends AppCompatActivity {
 
 
                 if(beschreibungstr.isEmpty()){
-                    Toast passalert = Toast.makeText(VeranstaltungErstellen.this, "Beschreibung darf nicht leer sein", Toast.LENGTH_SHORT);
+                    Toast passalert = Toast.makeText(VeranstaltungErstellenAbschluss.this, "Beschreibung darf nicht leer sein", Toast.LENGTH_SHORT);
                     passalert.show();
                 }else {
                     Veranstaltung veranstaltung = new Veranstaltung(beschreibungstr, detailstr, userstr, spinnerkategorien);
 
                     helper.insertVeranstaltung(veranstaltung);
 
-                    Intent intent = new Intent(getApplicationContext(), Home.class);
+                    Intent intent = new Intent(getApplicationContext(), Hauptmenu.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
 
@@ -108,7 +113,7 @@ public class VeranstaltungErstellen extends AppCompatActivity {
 
     }
     public void clickItem(MenuItem item) {
-        Intent intent = new Intent(VeranstaltungErstellen.this, Profil.class);
+        Intent intent = new Intent(VeranstaltungErstellenAbschluss.this, Profil.class);
         startActivity(intent);
     }
 
