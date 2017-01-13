@@ -8,7 +8,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,14 +20,19 @@ import de.hska.trinkertinder30.database.DatabaseHelper;
 import de.hska.trinkertinder30.domain.Kontakt;
 
 /**
- * Created by davidiwertowski on 21.12.16.
+ * Dritte/finale Ansicht des Veranstaltung suchen-Prozesses
+ * Mit dieser Klasse wird die Ansicht realisiert, damit man die ausgewählte Veranstaltung anfragen/ablehnen kann
+ *
+ * @Version 1.0
  */
-
 public class VeranstaltungSuchenDetail extends AppCompatActivity {
 
-    DatabaseHelper helper = new DatabaseHelper(this);
-    Kontakt contact = new Kontakt();
+    public Button zurueckButton;
+    public Button anfragenButton;
 
+    DatabaseHelper helper = new DatabaseHelper(this);
+
+    Kontakt kontakt = new Kontakt();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +45,42 @@ public class VeranstaltungSuchenDetail extends AppCompatActivity {
         TextView tvUser = (TextView) findViewById(R.id.TVUser);
 
         Bundle bundle = getIntent().getExtras();
+
         String beschreibungspfad = bundle.getString("beschreibungspfad");
         String beschreibung = bundle.getString("beschreibung");
-        String kategoriename = bundle.getString("kategorie");
 
-        ArrayList<String> details = helper.getDetailsAndUser(beschreibung, kategoriename);
+        ArrayList<String> details = helper.getDetailsAndUser(beschreibung);
 
         tvPfad.setText(beschreibungspfad);
         tvBeschreibung.setText(beschreibung);
         tvDetail.setText(details.get(0));
         tvUser.setText(details.get(1));
 
+        anfragenButton = (Button) findViewById(R.id.BTNbestatigen);
+
+        anfragenButton.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View arg0){
+
+                Intent myIntent = new Intent(VeranstaltungSuchenDetail.this, Hauptmenu.class);
+                Toast.makeText(getApplicationContext(), "Anfrage gesendet", Toast.LENGTH_SHORT).show();
+                startActivity(myIntent);
+
+            }
+        });
+
+        zurueckButton = (Button) findViewById(R.id.BTNzuruck);
+
+        zurueckButton.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View arg0){
+
+                Intent myIntent = new Intent(VeranstaltungSuchenDetail.this, VeranstaltungSuchenKategorie.class);
+
+                startActivity(myIntent);
+
+            }
+        });
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -58,7 +91,7 @@ public class VeranstaltungSuchenDetail extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         if (username == "Gast") {
             getMenuInflater().inflate(R.menu.menured, menu);
         } else {
@@ -72,7 +105,7 @@ public class VeranstaltungSuchenDetail extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         MenuItem bedMenuItem = menu.findItem(R.id.MItemUser);
         bedMenuItem.setTitle(username);
 

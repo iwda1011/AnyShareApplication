@@ -20,14 +20,16 @@ import de.hska.trinkertinder30.database.DatabaseHelper;
 import de.hska.trinkertinder30.domain.Kontakt;
 
 /**
- * Created by davidiwertowski on 21.12.16.
+ * Erste Ansicht des Veranstaltung suchen-Prozesses
+ * Mit dieser Klasse wird die Ansicht der Kategorieauswahl für den Veranstaltung suchen-Prozesses realisiert
+ *
+ * @Version 1.0
  */
-
 public class VeranstaltungSuchenKategorie extends AppCompatActivity {
 
-
     private DatabaseHelper helper;
-    Kontakt contact = new Kontakt();
+
+    Kontakt kontakt = new Kontakt();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,9 @@ public class VeranstaltungSuchenKategorie extends AppCompatActivity {
         setContentView(R.layout.activity_suchenkategorie);
 
         final ListView listView = (ListView)findViewById(R.id.LVKatsSuchen);
+
         helper = new DatabaseHelper(this);
+
         ArrayList<String> array_kategorien = helper.getAllKategorien();
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
@@ -71,7 +75,7 @@ public class VeranstaltungSuchenKategorie extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         if (username == "Gast") {
             getMenuInflater().inflate(R.menu.menured, menu);
         } else {
@@ -85,7 +89,7 @@ public class VeranstaltungSuchenKategorie extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         MenuItem bedMenuItem = menu.findItem(R.id.MItemUser);
         bedMenuItem.setTitle(username);
 

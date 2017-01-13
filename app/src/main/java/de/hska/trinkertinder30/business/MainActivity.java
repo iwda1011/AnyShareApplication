@@ -25,20 +25,12 @@ import de.hska.trinkertinder30.domain.Kontakt;
  */
 public class MainActivity extends AppCompatActivity {
 
-    /**Button für Login, Weiterleitung zu Hauptmenü, funktioniert nur wenn Nutzer mit entsprechenden Daten sich anmeldet,
-     * die in der Datenbank hinterlegt sind */
-    public Button loginBtn;
+    public Button loginButton;
+    public Button anmeldeButton;
+    public Button gastButton;
 
-    /**Button für Anmeldung, Weiterleitung zum Anmelde-Fenster */
-    public Button signInBtn;
+    Kontakt kontakt;
 
-    /**Weiterleitung ins Hauptmenü, ohne Anmeldung bzw. explizieten Nutzer aus der Datenbank*/
-    public Button gastBtn;
-
-    /**Neuer Kontakt, Dummy-Kontakt, wird verwendet als Gastbenutzer*/
-    Kontakt contact;
-
-    /**Datenbankklasse der Kontakte initiert*/
     DatabaseHelper helper = new DatabaseHelper(this);
 
     @Override
@@ -46,27 +38,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainactivity);
 
-        loginBtn = (Button) findViewById(R.id.BTNLogin);
-        signInBtn = (Button) findViewById(R.id.BTNSignStart);
-        gastBtn = (Button) findViewById(R.id.BTNGast);
+        loginButton = (Button) findViewById(R.id.BTNLogin);
+        anmeldeButton = (Button) findViewById(R.id.BTNSignStart);
+        gastButton = (Button) findViewById(R.id.BTNGast);
 
-        loginBtn.setOnClickListener(new View.OnClickListener(){
+        loginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View arg0){
 
                 EditText username = (EditText)findViewById(R.id.TFUsername);
                 String usernamestr = username.getText().toString();
 
-
-/*
-                else if(usernamestr.substring(usernamestr.length()-1).contains(" ")){
-                    usernamestr = usernamestr.substring(0,usernamestr.length()-1);
-                }
-*/
-                EditText password = (EditText)findViewById(R.id.TFPassword2);
-                String pass =password.getText().toString();
+                EditText passwort = (EditText)findViewById(R.id.TFPassword2);
+                String passwortstr =passwort.getText().toString();
 
                 String passwordtest = helper.searchPassword(usernamestr);
-                if(pass.equals(passwordtest)){
+                if(passwortstr.equals(passwordtest)){
 
                     Intent myIntent = new Intent(MainActivity.this, Hauptmenu.class);
                     Kontakt contact = new Kontakt();
@@ -79,11 +65,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast passwordAlert = Toast.makeText(MainActivity.this, "Passwort/Nutzername stimmt nicht überein", Toast.LENGTH_SHORT);
                     passwordAlert.show();
                 }
-
             }
         });
 
-        signInBtn.setOnClickListener(new View.OnClickListener(){
+        anmeldeButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View arg0){
 
                 Intent myIntent = new Intent(MainActivity.this, Anmeldung.class);
@@ -93,23 +78,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        gastBtn.setOnClickListener(new View.OnClickListener(){
+        gastButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View arg0){
 
-                contact = new Kontakt();
-                contact.setUname("Gast");
+                kontakt = new Kontakt();
+                kontakt.setUname("Gast");
                 Intent myIntent = new Intent(MainActivity.this, Hauptmenu.class);
                 startActivity(myIntent);
 
             }
         });
 
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(R.layout.custom_logo);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-
     }
 
     @Override
@@ -122,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        Kontakt c = new Kontakt();
         MenuItem bedMenuItem = menu.findItem(R.id.MItemUserGrey);
         return super.onPrepareOptionsMenu(menu);
     }

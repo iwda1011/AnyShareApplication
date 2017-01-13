@@ -13,17 +13,18 @@ import de.hska.trinkertinder30.R;
 import de.hska.trinkertinder30.domain.Kontakt;
 
 /**
- * Created by davidiwertowski on 21.12.16.
+ * Diese Klasse dient lediglich für eine Darstellung, wenn keine Einträge in einer Kategorie erstellt wurde
+ *
+ * @Version 1.0
  */
-
 public class Mock extends AppCompatActivity {
-    Kontakt contact = new Kontakt();
+
+    Kontakt kontakt = new Kontakt();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mock);
-
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -33,7 +34,7 @@ public class Mock extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         if (username == "Gast") {
             getMenuInflater().inflate(R.menu.menured, menu);
         } else {
@@ -47,7 +48,7 @@ public class Mock extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         MenuItem bedMenuItem = menu.findItem(R.id.MItemUser);
         bedMenuItem.setTitle(username);
 

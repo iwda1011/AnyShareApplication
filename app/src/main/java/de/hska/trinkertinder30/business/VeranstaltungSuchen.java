@@ -21,35 +21,36 @@ import de.hska.trinkertinder30.database.DatabaseHelper;
 import de.hska.trinkertinder30.domain.Kontakt;
 
 /**
- * Created by davidiwertowski on 21.12.16.
+ * Zweite Ansicht des Veranstaltung suchen-Prozesses
+ * Hier werden die jeweiligen Veranstaltungen der jeweiligen Kategorien angezeigt
+ *
+ * @Version 1.0
  */
-
 public class VeranstaltungSuchen extends AppCompatActivity {
 
-    private DatabaseHelper databaseHelper;
-    Kontakt contact = new Kontakt();
+    private DatabaseHelper helper;
+
+    Kontakt kontakt = new Kontakt();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suchen);
 
-
         TextView tvPfad = (TextView) findViewById(R.id.TVPfad2);
 
-
         Bundle bundle = getIntent().getExtras();
+
         final String kategoriename = bundle.getString("kategoriename");
         final String pfadname = "Kategorie > " + kategoriename;
+
         tvPfad.setText(pfadname);
 
         final ListView listView = (ListView)findViewById(R.id.LVBeschreibungen);
 
-        databaseHelper = new DatabaseHelper(this);
+        helper = new DatabaseHelper(this);
 
-        /**Hier werden alle Unterkategorien gesammelt
-         * TODO zusätzlich IDs sammeln und unten übergeben im Intent*/
-        ArrayList<String> array_kategorien = databaseHelper.getAllBeschreibungen(kategoriename);
+        ArrayList<String> array_kategorien = helper.getAllBeschreibungen(kategoriename);
 
         if (array_kategorien.size() == 0){
 
@@ -83,7 +84,6 @@ public class VeranstaltungSuchen extends AppCompatActivity {
                     myIntent.putExtras(bundle);
 
                     startActivity(myIntent);
-
                 }
             });
         }
@@ -98,7 +98,7 @@ public class VeranstaltungSuchen extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         if (username == "Gast") {
             getMenuInflater().inflate(R.menu.menured, menu);
         } else {
@@ -112,7 +112,7 @@ public class VeranstaltungSuchen extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         MenuItem bedMenuItem = menu.findItem(R.id.MItemUser);
         bedMenuItem.setTitle(username);
 

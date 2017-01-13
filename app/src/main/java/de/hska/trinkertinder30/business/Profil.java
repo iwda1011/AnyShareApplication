@@ -20,41 +20,42 @@ import de.hska.trinkertinder30.database.DatabaseHelper;
 import de.hska.trinkertinder30.domain.Kontakt;
 
 /**
- * Created by davidiwertowski on 23.12.16.
+ * Klasse für die Darstellung der Profilansicht, mit den Buttons für Ausloggen und Daten ändern (wobei Daten ändern noch nicht implementiert ist)
+ *
+ * @Version 1.0
  */
-
 public class Profil extends AppCompatActivity {
 
-    DatabaseHelper db = new DatabaseHelper(this);
-    Kontakt contact = new Kontakt();
-    private Button BtnLogout;
+    private Button logoutButton;
+
+    DatabaseHelper helper = new DatabaseHelper(this);
+
+    Kontakt kontakt = new Kontakt();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
 
-
         TextView tvUsername = (TextView)findViewById(R.id.TVUsername);
         TextView tvNachname = (TextView)findViewById(R.id.TVNachname);
         TextView tvVorname = (TextView)findViewById(R.id.TVVorname);
         TextView tvEmail = (TextView)findViewById(R.id.TVEmail);
 
-        List<Kontakt> contacts = db.getContactToShow(contact.getUname());
+        List<Kontakt> contacts = helper.getContactToShow(kontakt.getUname());
 
+        String namestr = contacts.get(0).getName().toString();
+        String vornamestr = contacts.get(0).getVorname().toString();
+        String emailstr = contacts.get(0).getEmail().toString();
 
-        String name = contacts.get(0).getName().toString();
-        String vorname = contacts.get(0).getVorname().toString();
-        String email = contacts.get(0).getEmail().toString();
+        tvUsername.setText(kontakt.getUname());
+        tvNachname.setText(namestr);
+        tvVorname.setText(vornamestr);
+        tvEmail.setText(emailstr);
 
-        tvUsername.setText(contact.getUname());
-        tvNachname.setText(name);
-        tvVorname.setText(vorname);
-        tvEmail.setText(email);
+        logoutButton = (Button) findViewById(R.id.BtnLogout);
 
-        BtnLogout = (Button) findViewById(R.id.BtnLogout);
-
-        BtnLogout.setOnClickListener(new View.OnClickListener() {
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
 
                 Intent myIntent = new Intent(Profil.this, MainActivity.class);
@@ -63,7 +64,6 @@ public class Profil extends AppCompatActivity {
 
             }
         });
-
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -84,7 +84,7 @@ public class Profil extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         MenuItem bedMenuItem = menu.findItem(R.id.MItemUser);
         bedMenuItem.setTitle(username);
 

@@ -1,9 +1,10 @@
 package de.hska.trinkertinder30.domain;
 
 /**
- * Created by davidiwertowski on 21.12.16.
+ * Domain-Klasse für alle Kategorien
+ *
+ * @Version 1.0
  */
-
 public class Kategorie {
 
     String name, unterkategorie;

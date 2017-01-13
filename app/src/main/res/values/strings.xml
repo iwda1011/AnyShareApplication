@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">AnyShare</string>
     <string name="emptystring"></string>
+    <string name="Veranstaltung"><i>Veranstaltung:</i></string>
+    <string name="User"><i>Benutzer:</i></string>
+    <string name="Detail"><i>Details:</i></string>
+    <string name="Beschreibung"><i>Beschreibung</i></string>
+    <string name="DetailInfos"><i>Detailinfos</i></string>
+    <string name="Kategoriewahlen"><i>Kategorie wählen:</i></string>
 </resources>

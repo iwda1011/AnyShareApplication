@@ -13,9 +13,11 @@ import de.hska.trinkertinder30.domain.Kontakt;
 import de.hska.trinkertinder30.domain.Veranstaltung;
 
 /**
- * Created by davidiwertowski on 19.12.16.
+ * Datenbankklasse damit Veranstaltungen, Benutzer und Kategorien abgespeichert und ausgelesen werden können.
+ * Es werden drei Tabellen angelegt, entsprechend der Domain-Klassen
+ *
+ * @Version 1.0
  */
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
@@ -31,14 +33,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_PASSWORT = "passwort";
 
-
     public static final String TABLE_NAME_VERANSTALTUNG = "veranstaltung";
     public static final String COLUMN_BESCHREIBUNG = "beschreibung";
     public static final String COLUMN_KATEGORIE = "kategorie";
     public static final String COLUMN_DETAIL = "detail";
     public static final String COLUMN_VERANSTALTER = "veranstalter";
     public static final String COLUMN_TIMESTAMP = "sqltime";
-
 
     public static final String INSERT_SPORT = "INSERT INTO " + TABLE_NAME_KATEGORIE + " (" + COLUMN_KATEGORIE + ") Values ('Sport')";
     public static final String INSERT_ESSEN = "INSERT INTO " + TABLE_NAME_KATEGORIE + " (" + COLUMN_KATEGORIE + ") Values ('Essen')";
@@ -98,42 +98,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_TIMESTAMP
             +" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL);";
 
-    public void insertContact(Kontakt c){
+    /**
+     * Schreibt in die Tabelle kontakte einen neuen Benutzer
+     * @param kontakt der Kontakt der in die Datenbank geschrieben wird
+     */
+    public void insertContact(Kontakt kontakt){
 
         db = this.getWritableDatabase();
+
         ContentValues values = new ContentValues();
 
         String query = "SELECT * FROM " + TABLE_NAME_KONTAKTE;
+
         Cursor cursor = db.rawQuery(query, null);
+
         int count = cursor.getCount();
 
         values.put(COLUMN_ID, count);
-        values.put(COLUMN_NAME, c.getName());
-        values.put(COLUMN_VORNAME, c.getVorname());
-        values.put(COLUMN_EMAIL, c.getEmail());
-        values.put(COLUMN_USERNAME, c.getUname());
-        values.put(COLUMN_PASSWORT, c.getPass());
+        values.put(COLUMN_NAME, kontakt.getName());
+        values.put(COLUMN_VORNAME, kontakt.getVorname());
+        values.put(COLUMN_EMAIL, kontakt.getEmail());
+        values.put(COLUMN_USERNAME, kontakt.getUname());
+        values.put(COLUMN_PASSWORT, kontakt.getPass());
 
         db.insert(TABLE_NAME_KONTAKTE, null, values);
         db.close();
     }
 
-    public String searchPassword(String uname){
+    /**
+     * Überprüft ob das Passwort zu Benutzernamen übereinstimmt
+     * @param username Name der mit passenden Passwort übereinstimmen soll
+     * @return Passwort des Users
+     */
+    public String searchPassword(String username){
 
         db = this.getReadableDatabase();
+
         String query = "SELECT  " + COLUMN_USERNAME + ", " + COLUMN_PASSWORT + " FROM " + TABLE_NAME_KONTAKTE;
+
         Cursor cursor = db.rawQuery(query, null);
 
-        String a, b;
-        b = "not found";
+        String firststr, secondstr;
+        secondstr = "not found";
 
         if(cursor.moveToFirst()){
             do{
-                a = cursor.getString(0);
+                firststr = cursor.getString(0);
 
-                if(a.equals(uname)){
+                if(firststr.equals(username)){
 
-                    b = cursor.getString(1);
+                    secondstr = cursor.getString(1);
                     break;
                 }
 
@@ -141,14 +155,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             while (cursor.moveToNext());
         }
 
-        return b;
+        return secondstr;
     }
 
-    public List<Kontakt> getContactToShow(String user){
+    /**
+     * Holt alle Benutzerinformationen zu gegegebenen Benutzername
+     * @param username Benutzernamen der zu den passenden Benutzerinformationen übereinstimmen soll
+     * @return Alle Informationen über den Benutzer
+     */
+    public List<Kontakt> getContactToShow(String username){
 
         List<Kontakt> contacts = new ArrayList<>();
+
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME_KONTAKTE + " WHERE "+ COLUMN_USERNAME + " ='" + user + "'", null);
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME_KONTAKTE + " WHERE "+ COLUMN_USERNAME + " ='" + username + "'", null);
 
         if (cursor != null){
             if (cursor.moveToFirst()){
@@ -156,27 +177,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
                     String vorname = cursor.getString(cursor.getColumnIndex(COLUMN_VORNAME));
                     String email = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL));
-                    String pword = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORT));
+                    String passwort = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORT));
 
-                    contacts.add(new Kontakt(name, vorname, email,  pword));
+                    contacts.add(new Kontakt(name, vorname, email,  passwort));
 
                 } while (cursor.moveToNext());
             }
         }
         return contacts;
     }
-    //
 
     /**
-     * Holt alle Kategorienamen
-     * @return
+     * Sammelt alle Kategorien die in der Datenbank abgespeichert sind
+     * @return alle Kategorien
      */
     public ArrayList<String> getAllKategorien(){
+
         ArrayList<String> kategorien = new ArrayList<String>();
 
         String selectQuery = "SELECT  * FROM " + TABLE_NAME_KATEGORIE;
 
         SQLiteDatabase db = this.getReadableDatabase();
+
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
@@ -192,17 +214,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return kategorien;
     }
 
-    ////////////////////////////////////////////
-    ////////////////////////////////////////////
-
-
+    /**
+     * Schreibt eine neue Veranstaltung in die Datenbank
+     * @param veranstaltung Veranstaltung die in die Datenbank gespeichert werden sol
+     */
     public void insertVeranstaltung(Veranstaltung veranstaltung){
 
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         String query = "SELECT * FROM " + TABLE_NAME_VERANSTALTUNG;
+
         Cursor cursor = db.rawQuery(query, null);
+
         int count = cursor.getCount();
 
         values.put(COLUMN_ID, count);
@@ -211,23 +235,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_VERANSTALTER, veranstaltung.getVeranstalter());
         values.put(COLUMN_KATEGORIE, veranstaltung.getKategorie());
 
-
         db.insert(TABLE_NAME_VERANSTALTUNG, null, values);
         db.close();
     }
 
     /**
-     * Holt die Beschreibung zum passenden Kategorienamen
-     * @param kategoriename
-     * @return
+     * Sammelt alle Veranstaltungen der angeforderten Kategorie
+     * @param kategoriename Kategorie die für alle Veranstaltungen
+     * @return Veranstaltungen passend zu gegebenen Kategorienamen
      */
     public ArrayList<String> getAllBeschreibungen(String kategoriename){
+
         ArrayList<String> beschreibungen = new ArrayList<String>();
 
-        // Select Query
         String selectQuery = "SELECT "+ COLUMN_BESCHREIBUNG + ", " + COLUMN_KATEGORIE  +" FROM " + TABLE_NAME_VERANSTALTUNG + " WHERE " + COLUMN_KATEGORIE + " =  '" + kategoriename +"'";
 
         SQLiteDatabase db = this.getReadableDatabase();
+
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor != null){
@@ -242,11 +266,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return beschreibungen;
     }
 
+    /**
+     * Sammelt die Informationen für die gegebene Veranstaltung mit passendem Benutzernamen
+     * @param beschreibungstext Titel der Veranstaltung
+     * @return Gibt Benutzernamen und Informationen zur passenden Veranstaltung zurück
+     */
+    public ArrayList<String> getDetailsAndUser(String beschreibungstext){
 
-    public ArrayList<String> getDetailsAndUser(String beschreibungstext, String kategoriename){
         ArrayList<String> detailsAndUser = new ArrayList<String>();
 
-        // Select Query
         String selectQuery = "SELECT "+ COLUMN_DETAIL + " , " + COLUMN_VERANSTALTER +" FROM " + TABLE_NAME_VERANSTALTUNG + " WHERE " + COLUMN_BESCHREIBUNG + " =  '" + beschreibungstext +"'";
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -257,6 +285,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 do {
                     String detail = cursor.getString(cursor.getColumnIndex(COLUMN_DETAIL));
                     String username = cursor.getString(cursor.getColumnIndex(COLUMN_VERANSTALTER));
+
                     detailsAndUser.add(detail);
                     detailsAndUser.add(username);
                 } while (cursor.moveToNext());
@@ -265,13 +294,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return detailsAndUser;
     }
 
-
+    /**
+     * Holt alle Veranstaltungen aus der Datenbank für die Anzeige in der Liste des Hauptmenüs, limitiert auf die 4 neuesten Veranstaltungen
+     * @return die vier neuesten Veranstaltungen
+     */
     public ArrayList<Veranstaltung> getAllVeranstaltungen(){
+
         ArrayList<Veranstaltung> detailsAndUser = new ArrayList<Veranstaltung>();
 
-        // Select Query
         String selectQuery = "SELECT * FROM " + TABLE_NAME_VERANSTALTUNG + " ORDER BY " + COLUMN_ID + " DESC LIMIT 4  ";
+
         SQLiteDatabase db = this.getReadableDatabase();
+
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor != null){
@@ -281,13 +315,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     String kategorie = cursor.getString(cursor.getColumnIndex(COLUMN_KATEGORIE));
                     String username = cursor.getString(cursor.getColumnIndex(COLUMN_VERANSTALTER));
                     String timestamp = cursor.getString(cursor.getColumnIndex(COLUMN_TIMESTAMP));
+
                     detailsAndUser.add(new Veranstaltung(beschreibung, "",username, kategorie, timestamp));
                 } while (cursor.moveToNext());
             }
         }
         return detailsAndUser;
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {

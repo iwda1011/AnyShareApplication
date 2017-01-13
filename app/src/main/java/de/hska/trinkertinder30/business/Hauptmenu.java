@@ -31,10 +31,12 @@ import de.hska.trinkertinder30.domain.Veranstaltung;
  */
 public class Hauptmenu extends AppCompatActivity {
 
-    public Button erstellenBtn;
-    public Button suchenBtn;
-    public Button profilBtn;
-    Kontakt contact = new Kontakt();
+    public Button erstellenButton;
+    public Button suchenButton;
+    public Button profilButton;
+
+    Kontakt kontakt = new Kontakt();
+
     private DatabaseHelper helper;
 
     @Override
@@ -46,73 +48,64 @@ public class Hauptmenu extends AppCompatActivity {
 
         helper = new DatabaseHelper(this);
 
-
-        ArrayList<Veranstaltung> veranstaltungen = helper.getAllVeranstaltungen();
+        ArrayList<Veranstaltung> veranstaltungenListe = helper.getAllVeranstaltungen();
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
 
-
-
-        if(veranstaltungen.size() != 0) {
-            adapter.addAll(veranstaltungen);
+        if(veranstaltungenListe.size() != 0) {
+            adapter.addAll(veranstaltungenListe);
             adapter.notifyDataSetChanged();
         }
 
         listView.setAdapter(adapter);
 
-        String contactUname = contact.getUname();
+        String username = kontakt.getUname();
 
-        erstellenBtn = (Button) findViewById(R.id.veranserstellen);
-        suchenBtn = (Button) findViewById(R.id.veransuchen);
-        profilBtn = (Button) findViewById(R.id.profil);
+        erstellenButton = (Button) findViewById(R.id.veranserstellen);
+        suchenButton = (Button) findViewById(R.id.veransuchen);
+        profilButton = (Button) findViewById(R.id.profil);
 
-        suchenBtn.setOnClickListener(new View.OnClickListener() {
+        suchenButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
 
                 Intent myIntent = new Intent(Hauptmenu.this, VeranstaltungSuchenKategorie.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("username", contact.getUname());
-                System.out.println(contact.getUname()+"!!!!!!!");
+                bundle.putString("username", kontakt.getUname());
                 myIntent.putExtras(bundle);
                 startActivity(myIntent);
-
             }
         });
 
-
-        if (contactUname == "Gast") {
-            erstellenBtn.setOnClickListener(new View.OnClickListener() {
+        if (username == "Gast") {
+            erstellenButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
 
                     Toast.makeText(Hauptmenu.this, "Nicht eingeloggt", Toast.LENGTH_LONG).show();
-
                 }
             });
-            profilBtn.setOnClickListener(new View.OnClickListener() {
+            profilButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
 
                     Toast.makeText(Hauptmenu.this, "Nicht eingeloggt", Toast.LENGTH_LONG).show();
-
                 }
             });
-
         } else {
-            erstellenBtn.setOnClickListener(new View.OnClickListener() {
+            erstellenButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
 
                     Intent myIntent = new Intent(Hauptmenu.this, VeranstaltungErstellenKategorie.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("username", contact.getUname());
+                    bundle.putString("username", kontakt.getUname());
                     startActivity(myIntent);
 
                 }
             });
-            profilBtn.setOnClickListener(new View.OnClickListener() {
+            profilButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
 
                     Intent myIntent = new Intent(Hauptmenu.this, Profil.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("username", contact.getUname());
+                    bundle.putString("username", kontakt.getUname());
                     startActivity(myIntent);
 
                 }
@@ -120,19 +113,16 @@ public class Hauptmenu extends AppCompatActivity {
 
         }
 
-
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(R.layout.custom_logo);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         if (username == "Gast") {
             getMenuInflater().inflate(R.menu.menured, menu);
         } else {
@@ -146,7 +136,7 @@ public class Hauptmenu extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         MenuItem bedMenuItem = menu.findItem(R.id.MItemUser);
         bedMenuItem.setTitle(username);
 
@@ -155,11 +145,11 @@ public class Hauptmenu extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        String contactUname = contact.getUname();
+        String contactUname = kontakt.getUname();
         if(contactUname =="Gast"){
             super.onBackPressed();
         }else
-        Toast.makeText(getApplicationContext(), "Bitte unter Profil>Logout ausloggen", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Bitte unter Profil>Logout ausloggen", Toast.LENGTH_SHORT).show();
     }
 
     public void clickItem(MenuItem item) {

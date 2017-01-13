@@ -13,12 +13,14 @@ import de.hska.trinkertinder30.database.DatabaseHelper;
 import de.hska.trinkertinder30.domain.Kontakt;
 
 /**
- * Created by davidiwertowski on 16.12.16.
+ * Anmeldefenster um einen neuen Benutzer anlegen zu können. Der neue Nutzer wird mithilfe des DatabaseHelper in die Datenbank gespeichert
+ *
+ * @Version 1.0
  */
-
 public class Anmeldung extends Activity {
 
-    public Button signupBtn;
+    public Button anmeldeButton;
+
     DatabaseHelper helper = new DatabaseHelper(this);
 
     @Override
@@ -26,27 +28,24 @@ public class Anmeldung extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anmeldung);
 
+        anmeldeButton = (Button) findViewById(R.id.BTNSignup);
 
-        signupBtn = (Button) findViewById(R.id.BTNSignup);
-
-        signupBtn.setOnClickListener(new View.OnClickListener() {
+        anmeldeButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
                 EditText username = (EditText) findViewById(R.id.TFUser);
-                EditText name = (EditText) findViewById(R.id.TFName);
+                EditText nachname = (EditText) findViewById(R.id.TFName);
                 EditText vorname = (EditText) findViewById(R.id.TFVorname);
                 EditText email = (EditText) findViewById(R.id.TFEmail);
-                EditText pass = (EditText) findViewById(R.id.TFPassword1);
-                EditText passWdh = (EditText) findViewById(R.id.TFPassword2);
+                EditText passwort = (EditText) findViewById(R.id.TFPassword1);
+                EditText passwortWdh = (EditText) findViewById(R.id.TFPassword2);
 
-
-
-                String namestr = name.getText().toString();
+                String namestr = nachname.getText().toString();
                 String vornamestr = vorname.getText().toString();
                 String emailstr = email.getText().toString();
                 String usernamestr = username.getText().toString();
-                String passstr = pass.getText().toString();
-                String pass2str = passWdh.getText().toString();
+                String passwortstr = passwort.getText().toString();
+                String passwortWdhstr = passwortWdh.getText().toString();
 
                 if(usernamestr.substring(usernamestr.length()-1).contains(" ")){
                     usernamestr = usernamestr.substring(0,usernamestr.length()-1);
@@ -60,18 +59,18 @@ public class Anmeldung extends Activity {
                     Toast.makeText(Anmeldung.this, "Kein Vorname eingegeben", Toast.LENGTH_SHORT).show();
                 } else if (emailstr.isEmpty()) {
                     Toast.makeText(Anmeldung.this, "Keine E-Mail-Adresse eingegeben", Toast.LENGTH_SHORT).show();
-                } else if (passstr.isEmpty()) {
+                } else if (passwortstr.isEmpty()) {
                     Toast.makeText(Anmeldung.this, "Kein Passwort eingegeben", Toast.LENGTH_SHORT).show();
-                } else if (!passstr.equals(pass2str)) {
+                } else if (!passwortstr.equals(passwortWdhstr)) {
                     Toast.makeText(Anmeldung.this, "Passwort stimmt nicht überein!", Toast.LENGTH_SHORT).show();
                 } else {
                     Kontakt contact = new Kontakt();
+
                     contact.setName(namestr);
                     contact.setVorname(vornamestr);
                     contact.setEmail(emailstr);
                     contact.setUname(usernamestr);
-
-                    contact.setPass(passstr);
+                    contact.setPass(passwortstr);
 
                     helper.insertContact(contact);
 

@@ -20,15 +20,18 @@ import de.hska.trinkertinder30.database.DatabaseHelper;
 import de.hska.trinkertinder30.domain.Kontakt;
 
 /**
- * Created by davidiwertowski on 19.12.16.
+ * Erste Ansicht des Veranstaltung erstellen-Prozesses
+ * Mit dieser Klasse wird die Ansicht ermöglicht, damit die passende Kategorie ausgewählt werden kann, welche man für die jeweilige Veranstaltung auswählen möchte
+ *
+ * @Version 1.0
  */
-
 public class VeranstaltungErstellenKategorie extends AppCompatActivity {
 
-    DatabaseHelper helper = new DatabaseHelper(this);
-    public Button waehlenBtn;
-    public Kontakt contact = new Kontakt();
+    public Button waehlenButton;
 
+    DatabaseHelper helper = new DatabaseHelper(this);
+
+    public Kontakt kontakt = new Kontakt();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +46,9 @@ public class VeranstaltungErstellenKategorie extends AppCompatActivity {
 
         spinner.setAdapter(adapter);
 
-        waehlenBtn = (Button) findViewById(R.id.BtnKatWahlen);
+        waehlenButton = (Button) findViewById(R.id.BtnKatWahlen);
 
-        waehlenBtn.setOnClickListener(new View.OnClickListener(){
+        waehlenButton.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View arg0){
 
@@ -62,18 +65,16 @@ public class VeranstaltungErstellenKategorie extends AppCompatActivity {
             }
         });
 
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(R.layout.custom_logo);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
 
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         if (username == "Gast") {
             getMenuInflater().inflate(R.menu.menured, menu);
         } else {
@@ -87,7 +88,7 @@ public class VeranstaltungErstellenKategorie extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         MenuItem bedMenuItem = menu.findItem(R.id.MItemUser);
         bedMenuItem.setTitle(username);
 

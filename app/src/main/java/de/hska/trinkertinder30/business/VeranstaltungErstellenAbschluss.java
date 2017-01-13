@@ -20,14 +20,19 @@ import de.hska.trinkertinder30.domain.Kontakt;
 import de.hska.trinkertinder30.domain.Veranstaltung;
 
 /**
- * Created by davidiwertowski on 21.12.16.
+ * Zweite/finale Ansicht des Veranstaltung erstellen-Prozesses
+ * In dieser Klasse werden die Informationen gesetzt, nachdem die Kategorie ausgewählt wurde, damit eine Veranstaltung erstellt werden kann
+ * Nach Bestätigung durch den Erstellen-Button, wird die Veranstaltung in der Datenbank gespeichert
+ *
+ * @Version 1.0
  */
-
 public class VeranstaltungErstellenAbschluss extends AppCompatActivity {
 
+    public Button erstellenButton;
+
     DatabaseHelper helper = new DatabaseHelper(this);
-    public Button button1;
-    public Kontakt contact = new Kontakt();
+
+    public Kontakt kontakt = new Kontakt();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +41,15 @@ public class VeranstaltungErstellenAbschluss extends AppCompatActivity {
 
         TextView tvKatWaehlen = (TextView) findViewById(R.id.TVKategorieWaehlen);
 
+        Bundle bundle = getIntent().getExtras();
+        String kategorien = bundle.getString("spinnerkategorien");
+        String mockstr = "Veranstaltung erstellen > ";
 
-        Bundle zielkorb = getIntent().getExtras();
-        String text2 = zielkorb.getString("spinnerkategorien");
-        String text3 = "Veranstaltung erstellen > ";
+        tvKatWaehlen.setText(mockstr + kategorien);
 
+        erstellenButton = (Button) findViewById(R.id.BtnVerErstellen);
 
-
-        tvKatWaehlen.setText(text3 + text2);
-
-        button1 = (Button) findViewById(R.id.BtnVerErstellen);
-
-        button1.setOnClickListener(new View.OnClickListener(){
+        erstellenButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View arg0){
 
                 Bundle bundle = getIntent().getExtras();
@@ -56,11 +58,9 @@ public class VeranstaltungErstellenAbschluss extends AppCompatActivity {
                 EditText beschreibung = (EditText)findViewById(R.id.ETBeschreibung);
                 EditText detail = (EditText)findViewById(R.id.ETDetailbeschreibung);
 
-
                 String beschreibungstr = beschreibung.getText().toString();
                 String detailstr = detail.getText().toString();
-                String userstr = contact.getUname();
-
+                String userstr = kontakt.getUname();
 
                 if(beschreibungstr.isEmpty()){
                     Toast passalert = Toast.makeText(VeranstaltungErstellenAbschluss.this, "Beschreibung darf nicht leer sein", Toast.LENGTH_SHORT);
@@ -75,9 +75,7 @@ public class VeranstaltungErstellenAbschluss extends AppCompatActivity {
                     startActivity(intent);
 
                     Toast.makeText(getApplicationContext(), "Veranstaltung erstellt", Toast.LENGTH_LONG).show();
-
                 }
-
 
             }
         });
@@ -91,7 +89,7 @@ public class VeranstaltungErstellenAbschluss extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         if (username == "Gast") {
             getMenuInflater().inflate(R.menu.menured, menu);
         } else {
@@ -105,7 +103,7 @@ public class VeranstaltungErstellenAbschluss extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        String username = contact.getUname();
+        String username = kontakt.getUname();
         MenuItem bedMenuItem = menu.findItem(R.id.MItemUser);
         bedMenuItem.setTitle(username);
 

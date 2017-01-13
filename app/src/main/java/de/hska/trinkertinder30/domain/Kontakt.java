@@ -1,14 +1,12 @@
 package de.hska.trinkertinder30.domain;
 
 /**
- * Created by davidiwertowski on 16.12.16.
+ * Domain-Klasse für alle Kontakte
+ *
+ * @Version 1.0
  */
-
 public class Kontakt {
 
-    /**
-     * Hier wird die Variable für Name, Emailadresse, Username und Passwort gesetzt
-     */
     String name, vorname, email, pass;
     static String uname;
 

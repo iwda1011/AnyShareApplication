@@ -1,11 +1,10 @@
 package de.hska.trinkertinder30.domain;
 
-import java.security.Timestamp;
-
 /**
- * Created by davidiwertowski on 21.12.16.
+ * Domain-Klasse für alle Veranstaltungen
+ *
+ * @Version 1.0
  */
-
 public class Veranstaltung {
 
     String beschreibung, detail, kategorie, veranstalter, timestamp;
@@ -16,27 +15,22 @@ public class Veranstaltung {
         this.beschreibung = beschreibung;
         this.detail = detail;
         this.kategorie = kategorie;
-
-
     }
+
     public Veranstaltung(String beschreibung, String detail,String veranstalter,String kategorie) {
         this.beschreibung = beschreibung;
         this.detail = detail;
         this.kategorie = kategorie;
         this.veranstalter = veranstalter;
-
-
     }
+
     public Veranstaltung(String beschreibung, String detail,String veranstalter,String kategorie, String timestamp) {
         this.beschreibung = beschreibung;
         this.detail = detail;
         this.kategorie = kategorie;
         this.veranstalter = veranstalter;
         this.timestamp = timestamp;
-
     }
-
-
 
     public String getVeranstalter() {
         return veranstalter;
